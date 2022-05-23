@@ -3,6 +3,7 @@ import { Category } from "../Category";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { List, Item } from "./styles";
 import { categories as mockCategories } from "../../../api/db.json";
+import {resolve} from 'path';
 
 function useCategoriesDate() {
   const [categories, setCategories] = useState([]);
@@ -25,7 +26,7 @@ function useCategoriesDate() {
 export const ListOfCategories = () => {
   const [showFixed, setShowFixed] = useState(false);
   const { categories, loading } = useCategoriesDate();
-
+  //console.log(resolve(__dirname, 'src', 'index.html'));
   useEffect(function() {
     const onScroll = e => {
       const newShowFixed = window.scrollY > 200;
