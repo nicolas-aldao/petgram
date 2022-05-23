@@ -1,4 +1,5 @@
 {
+  "homepage": "https://nicolas-aldao.github.io/petgram",
   "name": "petgram",
   "version": "1.0.0",
   "description": "**¡Sígueme en Youtube para más contenido de React y Javascript!** 👉 https://www.youtube.com/midudev",
@@ -9,8 +10,8 @@
     "build": "webpack",
     "lint": "semistandard",
     "dev": "webpack-dev-server",
-    "predeploy": "npm run vercel-build",
-    "deploy": "gh-pages -d build"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
 
   },
   "repository": {
@@ -23,7 +24,7 @@
   "bugs": {
     "url": "https://github.com/nicolas-aldao/petgram/issues"
   },
-  "homepage": "https://nicolas-aldao.github.io/petgram",
+
   "devDependencies": {
     "@babel/core": "^7.4.5",
     "@babel/preset-env": "^7.4.5",
