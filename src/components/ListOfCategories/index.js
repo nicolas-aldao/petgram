@@ -26,7 +26,6 @@ function useCategoriesDate() {
 export const ListOfCategories = () => {
   const [showFixed, setShowFixed] = useState(false);
   const { categories, loading } = useCategoriesDate();
-  //console.log(resolve(__dirname, 'src', 'index.html'));
   useEffect(function() {
     const onScroll = e => {
       const newShowFixed = window.scrollY > 200;
@@ -42,7 +41,7 @@ export const ListOfCategories = () => {
     <List fixed={fixed}>
       {loading
         ? [1, 2, 3, 4, 5, 6].map(category => (
-            <Item key={category}>
+            <Item key={category} style={{ marginBottom: "20px" }}>
               <Category loading={loading}/>
             </Item>
           ))

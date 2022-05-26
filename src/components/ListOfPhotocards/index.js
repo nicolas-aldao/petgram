@@ -1,12 +1,42 @@
-import React from "react";
+import React, {Fragment} from "react";
+import { useQuery, gql } from "@apollo/client";
 import { Photocard } from "../Photocard";
+import { PhotocardSkeleton } from "../../skeletons/PhotocardSkeleton";
 
-export const ListOfPhotocards = () => {
-  return (
-    <ul>
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(id => (
-        <Photocard key={id} id={id}/>
-      ))}
-    </ul>
-  );
+const GET_PHOTOS = gql`
+  query getPhotos($categoryId: ID) {
+    photos(categoryId: $categoryId) {
+      id
+      categoryId
+      src
+      likes
+      userId
+      liked
+    }
+  }
+`;
+
+export const ListOfPhotocards = ({ categoryId }) => {
+  const { loading, error, data } = useQuery(GET_PHOTOS, {
+    variables: { categoryId: categoryId }
+  });
+  console.log(data);
+  if (data) {
+    return (
+      <ul>
+        {data.photos.map(photo => (
+          <Photocard key={photo.id} id={photo.id} {...photo} />
+        ))}
+      </ul>
+    );
+  }
+  if (loading) {
+    return (
+      <Fragment>
+        <PhotocardSkeleton />
+        <PhotocardSkeleton />
+        <PhotocardSkeleton />
+      </Fragment>
+    );
+  }
 };
