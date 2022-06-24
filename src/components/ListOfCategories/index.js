@@ -3,10 +3,11 @@ import { Category } from "../Category";
 import { LoadingSpinner } from "../LoadingSpinner";
 import { List, Item } from "./styles";
 import { categories as mockCategories } from "../../../api/db.json";
-import {resolve} from 'path';
+import { resolve } from "path";
 
 function useCategoriesDate() {
   const [categories, setCategories] = useState([]);
+
   const [loading, setLoading] = useState(false);
 
   useEffect(function() {
@@ -26,6 +27,7 @@ function useCategoriesDate() {
 export const ListOfCategories = () => {
   const [showFixed, setShowFixed] = useState(false);
   const { categories, loading } = useCategoriesDate();
+  const [apiItem, setApiItem] = useState([]);
   useEffect(function() {
     const onScroll = e => {
       const newShowFixed = window.scrollY > 200;
@@ -37,12 +39,26 @@ export const ListOfCategories = () => {
     return () => document.removeEventListener("scroll", onScroll);
   });
 
+  useEffect(function() {
+    //setLoading(true);
+    window
+      .fetch("https://naldao-tasks-api.herokuapp.com/tasks")
+      .then(res => res.json())
+      .then(response => {
+        const arrayRespon = [];
+        response.map(item => {
+          arrayRespon.push(item);
+        });
+        setApiItem(arrayRespon);
+      });
+  }, []);
+
   const renderList = fixed => (
     <List fixed={fixed}>
       {loading
         ? [1, 2, 3, 4, 5, 6].map(category => (
             <Item key={category} style={{ marginBottom: "20px" }}>
-              <Category loading={loading}/>
+              <Category loading={loading} />
             </Item>
           ))
         : categories.map(category => (
@@ -57,6 +73,15 @@ export const ListOfCategories = () => {
     <>
       {renderList()}
       {showFixed && renderList(true)}
+      {apiItem ? (
+        apiItem.map(item => (
+          <p key={JSON.parse(JSON.stringify(item["id"]))}>
+            {JSON.parse(JSON.stringify(item["title"]))}
+          </p>
+        ))
+      ) : (
+        <p>no</p>
+      )}
     </>
   );
 };

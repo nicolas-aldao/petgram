@@ -20,7 +20,6 @@ export const ListOfPhotocards = ({ categoryId }) => {
   const { loading, error, data } = useQuery(GET_PHOTOS, {
     variables: { categoryId: categoryId }
   });
-  console.log(data);
   if (data) {
     return (
       <ul>
